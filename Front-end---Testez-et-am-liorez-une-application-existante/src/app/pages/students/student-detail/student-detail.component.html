@@ -1,0 +1,35 @@
+<div class="card m-3">
+  <h5 class="card-header">Student Detail</h5>
+  <div class="card-body">
+    @if (errorMessage) {
+      <div class="alert alert-danger">{{ errorMessage }}</div>
+    }
+
+    @if (loading) {
+      <p>Loading...</p>
+    }
+
+    @if (student) {
+      <table class="table">
+        <tr>
+          <th>ID</th>
+          <td>{{ student.id }}</td>
+        </tr>
+        <tr>
+          <th>First Name</th>
+          <td>{{ student.firstName }}</td>
+        </tr>
+        <tr>
+          <th>Last Name</th>
+          <td>{{ student.lastName }}</td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td>{{ student.email }}</td>
+        </tr>
+      </table>
+      <a routerLink="/students" class="btn btn-secondary mr-1">Back to list</a>
+      <a [routerLink]="['/students', student.id, 'edit']" class="btn btn-warning">Edit</a>
+    }
+  </div>
+</div>

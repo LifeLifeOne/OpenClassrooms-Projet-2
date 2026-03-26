@@ -3,9 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../shared/material.module';
 import { UserService } from '../../core/service/user.service';
+import { AuthService } from '../../core/service/auth.service';
 import { Login } from '../../core/models/Login';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,12 +18,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
   private userService = inject(UserService);
+  private authService = inject(AuthService);
   private formBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
+  private router = inject(Router);
   loginForm: FormGroup = new FormGroup({});
   submitted: boolean = false;
   loading: boolean = false;
-  token: string = '';
   errorMessage: string = '';
 
   ngOnInit() {
@@ -40,7 +43,6 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
     this.errorMessage = '';
-    this.token = '';
     if (this.loginForm.invalid) {
       return;
     }
@@ -52,9 +54,9 @@ export class LoginComponent implements OnInit {
     this.userService.login(loginUser)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (response: string) => {
-          this.token = response;
-          this.loading = false;
+        next: (token: string) => {
+          this.authService.setToken(token);
+          this.router.navigate(['/students']);
         },
         error: (error: HttpErrorResponse) => {
           this.errorMessage = error.error?.message || error.message || 'Login failed';
@@ -65,7 +67,6 @@ export class LoginComponent implements OnInit {
 
   onReset(): void {
     this.submitted = false;
-    this.token = '';
     this.errorMessage = '';
     this.loginForm.reset();
   }

@@ -1,0 +1,52 @@
+<div class="card m-3">
+  <h5 class="card-header">
+    Students
+    <button class="btn btn-sm btn-outline-secondary float-end" (click)="logout()">Logout</button>
+  </h5>
+  <div class="card-body">
+    <div class="mb-3">
+      <a routerLink="/students/create" class="btn btn-primary">Add Student</a>
+    </div>
+
+    @if (errorMessage) {
+      <div class="alert alert-danger">{{ errorMessage }}</div>
+    }
+
+    @if (loading) {
+      <p>Loading...</p>
+    }
+
+    @if (!loading && students.length === 0) {
+      <p>No students found.</p>
+    }
+
+    @if (students.length > 0) {
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (student of students; track student.id) {
+            <tr>
+              <td>{{ student.id }}</td>
+              <td>{{ student.firstName }}</td>
+              <td>{{ student.lastName }}</td>
+              <td>{{ student.email }}</td>
+              <td>
+                <a [routerLink]="['/students', student.id]" class="btn btn-sm btn-info mr-1">View</a>
+                <a [routerLink]="['/students', student.id, 'edit']" class="btn btn-sm btn-warning mr-1">Edit</a>
+                <button class="btn btn-sm btn-danger" (click)="deleteStudent(student.id!)">Delete</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+</div>

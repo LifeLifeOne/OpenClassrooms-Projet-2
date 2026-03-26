@@ -40,10 +40,6 @@
         <div class="alert alert-danger mt-2">{{ errorMessage }}</div>
       }
 
-      @if (token) {
-        <div class="alert alert-success mt-2">Authentication successful! Token received.</div>
-      }
-
       <div class="text-center mt-2">
         <button class="btn btn-primary mr-1" [disabled]="loading">
           @if (loading) {

@@ -228,3 +228,62 @@ Le composant login suit exactement le meme modele que le register existant :
 1. `POST /api/login` pour obtenir un token JWT
 2. Copier le token dans la variable `{{jwt_token}}` ou dans le header `Authorization: Bearer <token>`
 3. Tester chaque endpoint CRUD avec le token
+
+---
+
+# Point 4 : Ecrans front-end pour gerer les etudiants
+
+## Architecture
+
+### Services
+| Fichier | Role |
+|---------|------|
+| `core/service/auth.service.ts` | Gestion du token JWT (stockage en sessionStorage, verification d'authentification, logout) |
+| `core/service/student.service.ts` | Appels API CRUD vers `/api/students` |
+| `core/interceptor/auth.interceptor.ts` | Intercepteur HTTP qui ajoute automatiquement le header `Authorization: Bearer <token>` a chaque requete |
+
+### Guard
+| Fichier | Role |
+|---------|------|
+| `core/guard/auth.guard.ts` | Protege les routes `/students/**` : redirige vers `/login` si l'utilisateur n'est pas connecte |
+
+### Models
+| Fichier | Role |
+|---------|------|
+| `core/models/Student.ts` | Interface TypeScript (DTO) pour Student avec `id?`, `firstName`, `lastName`, `email` |
+
+### Composants (pages)
+| Composant | Route | Description |
+|-----------|-------|-------------|
+| `StudentListComponent` | `/students` | Tableau avec liste des etudiants + boutons View, Edit, Delete |
+| `StudentDetailComponent` | `/students/:id` | Affiche les details d'un etudiant |
+| `StudentCreateComponent` | `/students/create` | Formulaire de creation d'un etudiant |
+| `StudentEditComponent` | `/students/:id/edit` | Formulaire de modification pre-rempli |
+
+## Securisation des routes
+
+- Le `authGuard` Angular protege toutes les routes sous `/students/**`
+- Si l'utilisateur n'est pas connecte (pas de token en sessionStorage), il est redirige vers `/login`
+- L'intercepteur HTTP ajoute automatiquement le Bearer Token a chaque requete API
+
+## Flux utilisateur
+
+1. L'utilisateur arrive sur `/login`
+2. Il se connecte -> le token JWT est stocke en sessionStorage -> redirection vers `/students`
+3. Il peut consulter, creer, modifier, supprimer des etudiants
+4. Il peut se deconnecter via le bouton Logout (supprime le token et redirige vers `/login`)
+
+## Gestion des etats
+
+- **Chargement** : message "Loading..." affiche pendant les appels API, boutons desactives
+- **Erreur** : les erreurs serveur s'affichent dans une alerte rouge
+- **Succes** : redirection automatique apres creation/modification
+
+## Fichiers modifies
+
+| Fichier | Modification |
+|---------|-------------|
+| `app.routes.ts` | Ajout des routes students protegees par authGuard + redirection racine vers login |
+| `app.config.ts` | Ajout de l'intercepteur HTTP pour le Bearer Token |
+| `login.component.ts` | Stockage du token via AuthService + redirection vers /students apres login |
+| `login.component.html` | Retrait du message de succes (remplace par la redirection) |

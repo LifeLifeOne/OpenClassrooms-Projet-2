@@ -1,0 +1,28 @@
+info:
+  name: Create Student
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:8080/api/students
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+          "firstName": "Alice",
+          "lastName": "Martin",
+          "email": "alice.martin@example.com"
+      }
+  auth:
+    type: bearer
+    token: "{{jwt_token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

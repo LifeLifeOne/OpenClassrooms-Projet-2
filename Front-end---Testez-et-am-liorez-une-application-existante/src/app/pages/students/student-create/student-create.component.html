@@ -1,0 +1,59 @@
+<div class="card m-3">
+  <h5 class="card-header">Add Student</h5>
+  <div class="card-body">
+    <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" formControlName="firstName" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && form['firstName'].errors }" />
+        @if (submitted && form['firstName'].errors) {
+          <div class="invalid-feedback">
+            @if (form['firstName'].errors?.['required']) {
+              <div>First Name is required</div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" formControlName="lastName" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && form['lastName'].errors }" />
+        @if (submitted && form['lastName'].errors) {
+          <div class="invalid-feedback">
+            @if (form['lastName'].errors?.['required']) {
+              <div>Last Name is required</div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" formControlName="email" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && form['email'].errors }" />
+        @if (submitted && form['email'].errors) {
+          <div class="invalid-feedback">
+            @if (form['email'].errors?.['required']) {
+              <div>Email is required</div>
+            }
+            @if (form['email'].errors?.['email']) {
+              <div>Email is invalid</div>
+            }
+          </div>
+        }
+      </div>
+
+      @if (errorMessage) {
+        <div class="alert alert-danger mt-2">{{ errorMessage }}</div>
+      }
+
+      <div class="text-center mt-2">
+        <button class="btn btn-primary mr-1" [disabled]="loading">
+          @if (loading) { Loading... } @else { Create }
+        </button>
+        <a routerLink="/students" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
