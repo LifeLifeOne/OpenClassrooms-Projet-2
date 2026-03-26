@@ -37,6 +37,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public void deleteAll() {
+        userRepository.deleteAll();
+        log.info("Deleted all users");
+    }
+
     public String login(String login, String password) {
         Assert.notNull(login, "Login must not be null");
         Assert.notNull(password, "Password must not be null");

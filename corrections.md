@@ -179,3 +179,52 @@ Le composant login suit exactement le meme modele que le register existant :
 3. Saisir un login et mot de passe d'un utilisateur existant
 4. Cliquer sur "Login"
 5. Verifier que le message "Authentication successful! Token received." s'affiche
+
+---
+
+# Point 3 : APIs CRUD pour la gestion des etudiants
+
+## Architecture en couches
+
+| Couche | Fichier | Role |
+|--------|---------|------|
+| **DTO** | `StudentDTO.java` | Objet de transfert avec validation (`@NotBlank`) - les entites n'apparaissent pas dans le controller |
+| **Controller** | `StudentController.java` | Gere les entrees/sorties HTTP (`/api/students/**`) |
+| **Service** | `StudentService.java` | Logique metier (creation, lecture, mise a jour, suppression) |
+| **Repository** | `StudentRepository.java` | Acces aux donnees via JPA |
+| **Entity** | `Student.java` | Entite JPA mappee sur la table `student` |
+| **Mapper** | `StudentDtoMapper.java` | Conversion DTO <-> Entity via MapStruct |
+
+## Endpoints implementes
+
+| Methode | URL | Description | Auth requise |
+|---------|-----|-------------|-------------|
+| `POST` | `/api/students` | Ajouter un etudiant | Oui (Bearer Token) |
+| `GET` | `/api/students` | Liste de tous les etudiants | Oui (Bearer Token) |
+| `GET` | `/api/students/{id}` | Details d'un etudiant | Oui (Bearer Token) |
+| `PUT` | `/api/students/{id}` | Modifier un etudiant | Oui (Bearer Token) |
+| `DELETE` | `/api/students/{id}` | Supprimer un etudiant | Oui (Bearer Token) |
+
+## Securisation par JWT
+
+### Filtre JWT (`JwtAuthenticationFilter.java`)
+- Intercepte chaque requete HTTP
+- Extrait le token du header `Authorization: Bearer <token>`
+- Valide le token (signature + expiration)
+- Authentifie l'utilisateur dans le `SecurityContext` de Spring
+
+### Methodes ajoutees dans `JwtService.java`
+- `extractUsername(token)` : extrait le username du token
+- `isTokenValid(token, userDetails)` : verifie la validite du token
+- `extractClaims(token)` : parse le token avec la cle secrete
+
+### Configuration Spring Security mise a jour
+- Le filtre JWT est ajoute avant `UsernamePasswordAuthenticationFilter`
+- `/api/students/**` requiert une authentification
+- `/api/register`, `/api/login`, `/api/users` restent publics
+
+## Test avec Postman
+
+1. `POST /api/login` pour obtenir un token JWT
+2. Copier le token dans la variable `{{jwt_token}}` ou dans le header `Authorization: Bearer <token>`
+3. Tester chaque endpoint CRUD avec le token

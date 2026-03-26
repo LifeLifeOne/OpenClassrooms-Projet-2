@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,5 +38,11 @@ public class UserController {
     @GetMapping("/api/users")
     public ResponseEntity<?> getUsers() {
         return ResponseEntity.ok(userService.getUsers());
+    }
+
+    @DeleteMapping("/api/users")
+    public ResponseEntity<Void> deleteAllUsers() {
+        userService.deleteAll();
+        return ResponseEntity.noContent().build();
     }
 }
