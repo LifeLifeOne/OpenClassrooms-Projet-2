@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: etudiant-backend
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+
+jwt:
+  secret: Y2hhbmdlLW1lLXRoaXMtaXMtYS12ZXJ5LWxvbmctc2VjcmV0LWtleS1mb3Itand0LXNpZ25pbmctMjU2Yml0cw==
+  expiration: 86400000
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: info
+      springframework:
+        web:
+          filter:
+            CommonsRequestLoggingFilter: info
+    com:
+      openclassrooms:
+        etudiant: info
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

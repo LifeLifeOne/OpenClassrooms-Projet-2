@@ -1,0 +1,14 @@
+# Back-end
+Back-end---Testez-et-am-liorez-une-application-existante/.env
+
+# Front-end
+Front-end---Testez-et-am-liorez-une-application-existante/node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
