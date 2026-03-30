@@ -23,6 +23,24 @@ Lors du lancement des tests d'integration (`mvn clean test`), les tests echouaie
 
 ---
 
+## Etape 2 - Analyse des tests back-end existants
+
+Avant d'ajouter de nouveaux tests, j'ai analysé les deux types de tests déjà présents dans le projet :
+
+### 1. Tests Unitaires (Services)
+- **Fichier :** `UserServiceTest.java`
+- **But :** Tester la logique métier de manière isolée.
+- **Outils :** **JUnit 5** et **Mockito**.
+- **Fonctionnement :** On utilise des "doublures" (Mocks) pour remplacer la base de données. On vérifie que le service appelle bien les bonnes méthodes (ex: `save`) et gère bien les erreurs (ex: `IllegalArgumentException`).
+
+### 2. Tests d'Intégration (Controllers)
+- **Fichier :** `UserControllerTest.java`
+- **But :** Tester le fonctionnement réel de l'API, du point d'entrée (HTTP) jusqu'à la base de données.
+- **Outils :** **MockMvc** (pour simuler des appels API) et **Testcontainers** (pour lancer une vraie base MySQL temporaire dans Docker).
+- **Fonctionnement :** On simule un envoi de formulaire (JSON) et on vérifie le code de réponse HTTP (ex: `201 Created` ou `400 Bad Request`).
+
+---
+
 ## Notes pour l'oral - Structure et fonctionnement du code existant
 
 ### Architecture globale
@@ -146,4 +164,23 @@ Pour le flux complet d'authentification : l'utilisateur s'inscrit, son mot de pa
 
 Un probleme que j'ai rencontre au debut, c'est avec TestContainers. Les tests d'integration ne fonctionnaient pas, Docker renvoyait une erreur alors qu'il marchait bien dans le terminal. En fait, la version 1.20.0 de TestContainers utilisait une vieille version de l'API Docker qui n'etait plus compatible avec Docker Desktop recent. La solution a ete de passer a TestContainers 2.0.3, ce qui a aussi necessite de renommer les artifacts dans le pom.xml.
 
-Voila, en resume le projet suit les bonnes pratiques : separation des couches, utilisation de DTO pour ne pas exposer les entites, securisation par JWT, et cote front on a les guards, l'intercepteur et les formulaires reactifs avec gestion des erreurs.
+---
+
+## Etape 3 - Plan de tests (Chemin Heureux uniquement)
+
+Conformément aux consignes, voici le plan de tests simplifié concentré sur les succès :
+
+### Back-end (JUnit / Mockito)
+1. **Unitaires (StudentService)** : 
+   - Vérifier que `findAll()` retourne la liste des étudiants.
+   - Vérifier que `create()` enregistre bien un nouvel étudiant.
+2. **Intégration (StudentController)** :
+   - Tester que `GET /api/students` renvoie un code 200.
+   - Tester que `POST /api/students` renvoie un code 201.
+
+### Front-end (Jest)
+1. **Unitaires (Services)** :
+   - Vérifier que `StudentService` appelle le bon endpoint GET.
+2. **Composants** :
+   - Vérifier que `StudentListComponent` affiche bien une liste d'étudiants à l'écran.
+

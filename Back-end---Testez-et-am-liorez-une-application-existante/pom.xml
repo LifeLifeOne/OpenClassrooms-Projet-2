@@ -158,6 +158,35 @@
 				</configuration>
 
 			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.12</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<excludes>
+								<exclude>com/openclassrooms/etudiant/entities/**</exclude>
+								<exclude>com/openclassrooms/etudiant/dto/**</exclude>
+								<exclude>com/openclassrooms/etudiant/configuration/**</exclude>
+								<exclude>com/openclassrooms/etudiant/mapper/**</exclude>
+								<exclude>com/openclassrooms/etudiant/handler/**</exclude>
+								<exclude>com/openclassrooms/etudiant/EtudiantBackendApplication.class</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
