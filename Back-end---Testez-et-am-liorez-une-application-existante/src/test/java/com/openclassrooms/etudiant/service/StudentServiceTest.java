@@ -32,7 +32,7 @@ public class StudentServiceTest {
      * Test fetching all students.
      */
     @Test
-    public void test_getAll_returns_list_of_students() {
+    public void getAllReturnsListOfStudents() {
         // GIVEN
         Student student1 = new Student();
         student1.setFirstName("Alice");
@@ -59,7 +59,7 @@ public class StudentServiceTest {
      * Test creating a new student.
      */
     @Test
-    public void test_create_saves_student() {
+    public void createSavesStudent() {
         // GIVEN
         Student student = new Student();
         student.setFirstName("Charlie");
@@ -81,7 +81,7 @@ public class StudentServiceTest {
      * Test retrieving a student by ID.
      */
     @Test
-    public void test_getById_returns_student() {
+    public void getByIdReturnsStudent() {
         // GIVEN
         Long id = 1L;
         Student student = new Student();
@@ -102,7 +102,7 @@ public class StudentServiceTest {
      * Test updating student information.
      */
     @Test
-    public void test_update_modifies_student() {
+    public void updateModifiesStudent() {
         // GIVEN
         Long id = 1L;
         Student existing = new Student();
@@ -132,7 +132,7 @@ public class StudentServiceTest {
      * Test deleting a student by ID.
      */
     @Test
-    public void test_delete_removes_student() {
+    public void deleteRemovesStudent() {
         // GIVEN
         Long id = 1L;
         Student student = new Student();
@@ -150,7 +150,7 @@ public class StudentServiceTest {
      * Test deleting all students.
      */
     @Test
-    public void test_deleteAll_clears_repository() {
+    public void deleteAllClearsRepository() {
         // WHEN
         studentService.deleteAll();
 

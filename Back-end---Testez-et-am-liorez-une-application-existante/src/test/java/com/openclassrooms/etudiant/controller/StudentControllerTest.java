@@ -72,7 +72,7 @@ public class StudentControllerTest {
 
         // WHEN & THEN
         mockMvc.perform(MockMvcRequestBuilders.get(URL)
-                        .accept(MediaType.APPLICATION_JSON))
+                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].firstName").value("John"))
@@ -93,9 +93,9 @@ public class StudentControllerTest {
 
         // WHEN & THEN
         mockMvc.perform(MockMvcRequestBuilders.post(URL)
-                        .content(objectMapper.writeValueAsString(studentDTO))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                .content(objectMapper.writeValueAsString(studentDTO))
+                .contentType(MediaType.APPLICATION_JSON)        
+                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("Jane"))
@@ -141,8 +141,8 @@ public class StudentControllerTest {
 
         // WHEN & THEN
         mockMvc.perform(MockMvcRequestBuilders.put(URL + "/" + student.getId())
-                        .content(objectMapper.writeValueAsString(updatedDTO))
-                        .contentType(MediaType.APPLICATION_JSON))
+                .content(objectMapper.writeValueAsString(updatedDTO))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("New"));
     }

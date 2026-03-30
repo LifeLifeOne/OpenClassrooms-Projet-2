@@ -45,7 +45,7 @@ public class UserServiceTest {
      * Test creating a null user.
      */
     @Test
-    public void test_create_null_user_throws_Exception() {
+    public void createNullUserThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> userService.register(null));
     }
@@ -54,7 +54,7 @@ public class UserServiceTest {
      * Test creating an already existing user.
      */
     @Test
-    public void test_create_already_exist_user_throws_IllegalArgumentException() {
+    public void createAlreadyExistUserThrowsIllegalArgumentException() {
         // GIVEN
         User user = new User();
         user.setFirstName(FIRST_NAME);
@@ -73,7 +73,7 @@ public class UserServiceTest {
      * Test successful user registration.
      */
     @Test
-    public void test_create_user_success() {
+    public void createUserSuccess() {
         // GIVEN
         User user = new User();
         user.setFirstName(FIRST_NAME);
@@ -96,7 +96,7 @@ public class UserServiceTest {
      * Test successful login.
      */
     @Test
-    public void test_login_success() {
+    public void loginSuccess() {
         // GIVEN
         User user = new User();
         user.setLogin(LOGIN);
@@ -116,7 +116,7 @@ public class UserServiceTest {
      * Test login with invalid credentials.
      */
     @Test
-    public void test_login_invalid_credentials_throws_Exception() {
+    public void loginInvalidCredentialsThrowsException() {
         // GIVEN
         when(userRepository.findByLogin(LOGIN)).thenReturn(Optional.empty());
 
@@ -129,7 +129,7 @@ public class UserServiceTest {
      * Test fetching all users.
      */
     @Test
-    public void test_getUsers_returns_list() {
+    public void getUsersReturnsList() {
         // GIVEN
         when(userRepository.findAll()).thenReturn(Collections.emptyList());
 
@@ -145,7 +145,7 @@ public class UserServiceTest {
      * Test deleting all users.
      */
     @Test
-    public void test_deleteAll_clears_repository() {
+    public void deleteAllClearsRepository() {
         // WHEN
         userService.deleteAll();
 

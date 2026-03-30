@@ -17,8 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class JwtServiceTest {
 
     private JwtService jwtService;
-    private final String SECRET = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970"; // Base64 encoded key
-    private final long EXPIRATION = 3600000; // 1 hour
+    private final String SECRET = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
+    private final long EXPIRATION = 3600000;
 
     @BeforeEach
     public void setUp() {
@@ -31,7 +31,7 @@ public class JwtServiceTest {
      * Test token generation and username extraction.
      */
     @Test
-    public void test_generateToken_and_extractUsername() {
+    public void generateTokenAndExtractUsername() {
         // GIVEN
         UserDetails userDetails = new User("testuser", "password", Collections.emptyList());
 
@@ -48,7 +48,7 @@ public class JwtServiceTest {
      * Test token validation with correct user.
      */
     @Test
-    public void test_isTokenValid_success() {
+    public void isTokenValidSuccess() {
         // GIVEN
         UserDetails userDetails = new User("testuser", "password", Collections.emptyList());
         String token = jwtService.generateToken(userDetails);

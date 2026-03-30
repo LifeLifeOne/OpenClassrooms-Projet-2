@@ -67,9 +67,9 @@ public class UserControllerTest {
 
         // WHEN
         mockMvc.perform(MockMvcRequestBuilders.post(URL)
-                        .content(objectMapper.writeValueAsString(registerDTO))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                .content(objectMapper.writeValueAsString(registerDTO))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
@@ -92,9 +92,9 @@ public class UserControllerTest {
 
         // WHEN
         mockMvc.perform(MockMvcRequestBuilders.post(URL)
-                        .content(objectMapper.writeValueAsString(registerDTO))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                .content(objectMapper.writeValueAsString(registerDTO))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
@@ -110,9 +110,9 @@ public class UserControllerTest {
 
         // WHEN
         mockMvc.perform(MockMvcRequestBuilders.post(URL)
-                        .content(objectMapper.writeValueAsString(registerDTO))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                .content(objectMapper.writeValueAsString(registerDTO))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isCreated());
     }
