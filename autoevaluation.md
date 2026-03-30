@@ -168,19 +168,70 @@ Un probleme que j'ai rencontre au debut, c'est avec TestContainers. Les tests d'
 
 ## Etape 3 - Plan de tests (Chemin Heureux uniquement)
 
-Conformément aux consignes, voici le plan de tests simplifié concentré sur les succès :
+Conformement aux consignes, voici le plan de tests simplifie concentre sur les succes :
 
 ### Back-end (JUnit / Mockito)
-1. **Unitaires (StudentService)** : 
-   - Vérifier que `findAll()` retourne la liste des étudiants.
-   - Vérifier que `create()` enregistre bien un nouvel étudiant.
+1. **Unitaires (StudentService)** :
+   - Verifier que `findAll()` retourne la liste des etudiants.
+   - Verifier que `create()` enregistre bien un nouvel etudiant.
 2. **Intégration (StudentController)** :
    - Tester que `GET /api/students` renvoie un code 200.
    - Tester que `POST /api/students` renvoie un code 201.
 
 ### Front-end (Jest)
 1. **Unitaires (Services)** :
-   - Vérifier que `StudentService` appelle le bon endpoint GET.
+   - Verifier que `StudentService` appelle le bon endpoint GET. -> **OK**
 2. **Composants** :
-   - Vérifier que `StudentListComponent` affiche bien une liste d'étudiants à l'écran.
+   - Verifier que `StudentListComponent` affiche bien une liste d'etudiants a l'ecran. -> **OK**
+
+---
+
+## Etape 4 - Tests realises et couverture
+
+### Back-end - 24 tests, couverture JaCoCo : 92%
+
+**Tests unitaires (Services avec Mockito) :**
+- `StudentServiceTest` (6 tests) : findAll, findById, create, update, deleteById, deleteAll
+- `UserServiceTest` (7 tests) : register, login, findAll, deleteAll, cas d'erreurs (login duplique, login inconnu, mauvais mot de passe)
+- `JwtServiceTest` (2 tests) : generation de token, extraction du username depuis un token
+
+**Tests d'integration (Controllers avec MockMvc + Testcontainers) :**
+- `StudentControllerTest` (6 tests) : GET /api/students, GET by id, POST, PUT, DELETE (avec authentification JWT)
+- `UserControllerTest` (3 tests) : POST /api/register, POST /api/login, GET /api/users
+
+**Configuration JaCoCo :**
+Le plugin JaCoCo est configure dans le `pom.xml` pour exclure de la couverture les classes qui ne contiennent pas de logique metier : entities, DTOs, configuration, mappers, handler et la classe main. Ces exclusions sont justifiees car ce sont des classes generees ou de configuration pure.
+
+### Front-end - 30 tests, couverture Jest : 99% Statements / 96% Functions / 99% Lines
+
+**Tests unitaires (Services) :**
+- `AuthService` (6 tests) : setToken, getToken, isAuthenticated (avec et sans token), logout
+- `UserService` (3 tests) : creation du service, register via POST, login via POST
+- `StudentService` (6 tests) : creation du service, getAll, getById, create, update, delete
+
+**Tests de composants :**
+- `RegisterComponent` (6 tests) : creation, initialisation du formulaire, validation formulaire invalide, soumission valide avec navigation, reset, getter des controles
+- `StudentListComponent` (7 tests) : creation, chargement des etudiants au init, affichage dans le tableau, suppression avec confirmation, annulation de suppression, gestion erreur au chargement, logout avec navigation
+- `AppComponent` (2 tests) : creation, titre
+
+### Script de lancement
+
+Un script `run-tests.sh` a la racine permet de lancer tous les tests (backend + frontend) en une seule commande et affiche les chemins vers les rapports de couverture a la fin.
+
+### Comment lancer les tests et consulter la couverture
+
+```bash
+# Tout d'un coup
+./run-tests.sh
+
+# Ou separement :
+# Backend
+cd Back-end---Testez-et-am-liorez-une-application-existante && mvn clean test
+# Rapport : target/site/jacoco/index.html
+
+# Frontend
+cd Front-end---Testez-et-am-liorez-une-application-existante && npx jest --coverage
+# Rapport : coverage/index.html
+```
+
 
