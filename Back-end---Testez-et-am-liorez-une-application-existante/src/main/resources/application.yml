@@ -16,7 +16,7 @@ spring:
     url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
 
 jwt:
-  secret: Y2hhbmdlLW1lLXRoaXMtaXMtYS12ZXJ5LWxvbmctc2VjcmV0LWtleS1mb3Itand0LXNpZ25pbmctMjU2Yml0cw==
+  secret: c2FsdXQtbGF1cmVudC1jZWNpLWVzdC1tYS1zdXBlci1jbGUtc2VjcmV0ZS1wb3VyLWp3dC0yNTZiaXRz
   expiration: 86400000
 
 logging:
