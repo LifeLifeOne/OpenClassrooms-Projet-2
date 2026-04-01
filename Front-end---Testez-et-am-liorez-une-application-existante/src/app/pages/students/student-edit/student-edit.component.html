@@ -9,7 +9,7 @@
       <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label>First Name</label>
-          <input type="text" formControlName="firstName" class="form-control"
+          <input type="text" formControlName="firstName" class="form-control" data-cy="firstname-input"
             [ngClass]="{ 'is-invalid': submitted && form['firstName'].errors }" />
           @if (submitted && form['firstName'].errors) {
             <div class="invalid-feedback">
@@ -22,7 +22,7 @@
 
         <div class="form-group">
           <label>Last Name</label>
-          <input type="text" formControlName="lastName" class="form-control"
+          <input type="text" formControlName="lastName" class="form-control" data-cy="lastname-input"
             [ngClass]="{ 'is-invalid': submitted && form['lastName'].errors }" />
           @if (submitted && form['lastName'].errors) {
             <div class="invalid-feedback">
@@ -35,7 +35,7 @@
 
         <div class="form-group">
           <label>Email</label>
-          <input type="email" formControlName="email" class="form-control"
+          <input type="email" formControlName="email" class="form-control" data-cy="email-input"
             [ngClass]="{ 'is-invalid': submitted && form['email'].errors }" />
           @if (submitted && form['email'].errors) {
             <div class="invalid-feedback">
@@ -50,11 +50,11 @@
         </div>
 
         @if (errorMessage) {
-          <div class="alert alert-danger mt-2">{{ errorMessage }}</div>
+          <div class="alert alert-danger mt-2" data-cy="error-message">{{ errorMessage }}</div>
         }
 
         <div class="text-center mt-2">
-          <button class="btn btn-primary mr-1" [disabled]="loading">
+          <button class="btn btn-primary mr-1" data-cy="submit-button" [disabled]="loading">
             @if (loading) { Loading... } @else { Update }
           </button>
           <a routerLink="/students" class="btn btn-secondary">Cancel</a>

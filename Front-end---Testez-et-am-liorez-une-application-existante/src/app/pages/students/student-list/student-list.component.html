@@ -1,15 +1,15 @@
 <div class="card m-3">
   <h5 class="card-header">
     Students
-    <button class="btn btn-sm btn-outline-secondary float-end" (click)="logout()">Logout</button>
+    <button class="btn btn-sm btn-outline-secondary float-end" data-cy="logout-button" (click)="logout()">Logout</button>
   </h5>
   <div class="card-body">
     <div class="mb-3">
-      <a routerLink="/students/create" class="btn btn-primary">Add Student</a>
+      <a routerLink="/students/create" class="btn btn-primary" data-cy="add-student-button">Add Student</a>
     </div>
 
     @if (errorMessage) {
-      <div class="alert alert-danger">{{ errorMessage }}</div>
+      <div class="alert alert-danger" data-cy="error-message">{{ errorMessage }}</div>
     }
 
     @if (loading) {
@@ -17,11 +17,11 @@
     }
 
     @if (!loading && students.length === 0) {
-      <p>No students found.</p>
+      <p data-cy="no-students-message">No students found.</p>
     }
 
     @if (students.length > 0) {
-      <table class="table table-striped">
+      <table class="table table-striped" data-cy="students-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -33,15 +33,15 @@
         </thead>
         <tbody>
           @for (student of students; track student.id) {
-            <tr>
+            <tr data-cy="student-row">
               <td>{{ student.id }}</td>
               <td>{{ student.firstName }}</td>
               <td>{{ student.lastName }}</td>
               <td>{{ student.email }}</td>
               <td>
-                <a [routerLink]="['/students', student.id]" class="btn btn-sm btn-info mr-1">View</a>
-                <a [routerLink]="['/students', student.id, 'edit']" class="btn btn-sm btn-warning mr-1">Edit</a>
-                <button class="btn btn-sm btn-danger" (click)="deleteStudent(student.id!)">Delete</button>
+                <a [routerLink]="['/students', student.id]" class="btn btn-sm btn-info mr-1" data-cy="view-button">View</a>
+                <a [routerLink]="['/students', student.id, 'edit']" class="btn btn-sm btn-warning mr-1" data-cy="edit-button">Edit</a>
+                <button class="btn btn-sm btn-danger" data-cy="delete-button" (click)="deleteStudent(student.id!)">Delete</button>
               </td>
             </tr>
           }

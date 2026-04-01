@@ -2,7 +2,7 @@
   <h5 class="card-header">Student Detail</h5>
   <div class="card-body">
     @if (errorMessage) {
-      <div class="alert alert-danger">{{ errorMessage }}</div>
+      <div class="alert alert-danger" data-cy="error-message">{{ errorMessage }}</div>
     }
 
     @if (loading) {
@@ -10,26 +10,26 @@
     }
 
     @if (student) {
-      <table class="table">
+      <table class="table" data-cy="student-detail-table">
         <tr>
           <th>ID</th>
-          <td>{{ student.id }}</td>
+          <td data-cy="student-id">{{ student.id }}</td>
         </tr>
         <tr>
           <th>First Name</th>
-          <td>{{ student.firstName }}</td>
+          <td data-cy="student-firstname">{{ student.firstName }}</td>
         </tr>
         <tr>
           <th>Last Name</th>
-          <td>{{ student.lastName }}</td>
+          <td data-cy="student-lastname">{{ student.lastName }}</td>
         </tr>
         <tr>
           <th>Email</th>
-          <td>{{ student.email }}</td>
+          <td data-cy="student-email">{{ student.email }}</td>
         </tr>
       </table>
-      <a routerLink="/students" class="btn btn-secondary mr-1">Back to list</a>
-      <a [routerLink]="['/students', student.id, 'edit']" class="btn btn-warning">Edit</a>
+      <a routerLink="/students" class="btn btn-secondary mr-1" data-cy="back-button">Back to list</a>
+      <a [routerLink]="['/students', student.id, 'edit']" class="btn btn-warning" data-cy="edit-button">Edit</a>
     }
   </div>
 </div>
