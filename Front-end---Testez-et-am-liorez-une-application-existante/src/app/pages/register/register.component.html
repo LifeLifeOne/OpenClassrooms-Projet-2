@@ -9,6 +9,7 @@
             type="text"
             formControlName="firstName"
             class="form-control"
+            data-cy="firstname-input"
             [ngClass]="{ 'is-invalid': submitted && form['firstName'].errors }"
           />
           @if (submitted && form['firstName'].errors) {
@@ -25,6 +26,7 @@
             type="text"
             formControlName="lastName"
             class="form-control"
+            data-cy="lastname-input"
             [ngClass]="{ 'is-invalid': submitted && form['lastName'].errors }"
           />
           @if (submitted && form['lastName'].errors) {
@@ -42,6 +44,7 @@
           type="text"
           formControlName="login"
           class="form-control"
+          data-cy="login-input"
           [ngClass]="{ 'is-invalid': submitted && form['login'].errors }"
         />
         @if (submitted && form['login'].errors) {
@@ -59,6 +62,7 @@
           type="text"
           formControlName="password"
           class="form-control"
+          data-cy="password-input"
           [ngClass]="{ 'is-invalid': submitted && form['password'].errors }"
         />
         @if (submitted && form['password'].errors) {
@@ -70,7 +74,7 @@
         }
       </div>
       <div class="text-center">
-        <button class="btn btn-primary mr-1">Register</button>
+        <button class="btn btn-primary mr-1" data-cy="submit-button">Register</button>
         <button class="btn btn-secondary" type="reset" (click)="onReset()">
           Cancel
         </button>
